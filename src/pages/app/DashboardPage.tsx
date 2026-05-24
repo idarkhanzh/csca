@@ -4,7 +4,7 @@ import DashboardStats from '../../components/ui/DashboardStats';
 import ProgressBar from '../../components/ui/ProgressBar';
 import { SUBJECTS } from '../../data/subjects';
 import { LESSONS } from '../../data/pathway';
-import { computeReadiness, getAttempts, getCompletedLessons, lessonsCompletedCount, questionsSolvedCount, subjectReadiness } from '../../lib/progress';
+import { computeReadiness, currentStreakDays, getAttempts, getCompletedLessons, lessonsCompletedCount, questionsSolvedCount, subjectReadiness } from '../../lib/progress';
 import { useAuth } from '../../lib/auth';
 import { useMemo } from 'react';
 
@@ -34,9 +34,9 @@ export default function DashboardPage() {
 
       <DashboardStats items={[
         { label: 'Готовность к CSCA',  value: `${readiness}%`,                Icon: Target,        sub: 'на основе уроков и квизов' },
-        { label: 'Пройдено модулей',   value: lessonsCompletedCount(),         Icon: BookOpen,      sub: `из ${LESSONS.length} доступных` },
+        { label: 'Пройдено уроков',    value: lessonsCompletedCount(),         Icon: BookOpen,      sub: `из ${LESSONS.length} доступных` },
         { label: 'Решено вопросов',    value: questionsSolvedCount(),          Icon: ClipboardList, sub: 'за последние сессии' },
-        { label: 'Серия дней',         value: '5',                             Icon: Sparkles,      sub: 'не прерывай ритм' },
+        { label: 'Серия дней',         value: currentStreakDays(),             Icon: Sparkles,      sub: currentStreakDays() === 0 ? 'начни сегодня' : 'не прерывай ритм' },
       ]} />
 
       <div className="grid lg:grid-cols-3 gap-5">

@@ -75,17 +75,42 @@ export function questionsSolvedCount(): number {
 
 export function computeReadiness(): number {
   // Simple deterministic mix: lesson coverage + recent quiz accuracy.
+  // Fresh user with zero progress legitimately gets 0%.
   const totalLessons = LESSONS.length || 1;
   const lessonCoverage = Math.min(1, lessonsCompletedCount() / totalLessons);
 
   const attempts = getAttempts().slice(0, 10);
+  if (attempts.length === 0 && lessonsCompletedCount() === 0) return 0;
+
   const accuracy = attempts.length === 0
-    ? 0.4 // starting baseline so the bar isn't empty
+    ? 0
     : attempts.reduce((acc, a) => acc + (a.total ? a.score / a.total : 0), 0) / attempts.length;
 
   const mixed = 0.55 * lessonCoverage + 0.45 * accuracy;
-  // Floor to 12 so a fresh demo still shows progress on the bar.
-  return Math.max(12, Math.round(mixed * 100));
+  return Math.round(mixed * 100);
+}
+
+export function currentStreakDays(): number {
+  // Count consecutive days (ending today) on which there's at least one attempt.
+  const attempts = getAttempts();
+  if (attempts.length === 0) return 0;
+
+  const days = new Set(
+    attempts.map((a) => new Date(a.completedAt).toISOString().slice(0, 10)),
+  );
+
+  let streak = 0;
+  const cursor = new Date();
+  // Allow today to be missing — start streak from "yesterday" only if today is empty.
+  if (!days.has(cursor.toISOString().slice(0, 10))) {
+    cursor.setDate(cursor.getDate() - 1);
+    if (!days.has(cursor.toISOString().slice(0, 10))) return 0;
+  }
+  while (days.has(cursor.toISOString().slice(0, 10))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
 }
 
 export function subjectReadiness(slug: SubjectSlug): number {
