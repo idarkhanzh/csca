@@ -1,5 +1,5 @@
 import { ArrowLeft, CheckCircle2, RotateCcw } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LESSONS, MODULES } from '../../data/pathway';
 import { SUBJECT_MAP } from '../../data/subjects';
@@ -28,6 +28,15 @@ export default function LessonPage() {
 
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+
+  // Reset per-lesson state when navigating to a different lesson — React Router
+  // reuses the same component instance, so without this, the previous lesson's
+  // answers + "submitted" state leaks into the next one.
+  useEffect(() => {
+    setAnswers({});
+    setSubmitted(false);
+    window.scrollTo({ top: 0 });
+  }, [lessonId]);
 
   if (!lesson) {
     return (

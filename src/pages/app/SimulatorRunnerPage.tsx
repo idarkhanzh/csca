@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, CheckCircle2, Maximize2, Minimize2, RotateCcw } from 'lucide-react';
 import QuestionRenderer from '../../components/ui/QuestionRenderer';
@@ -30,6 +30,17 @@ export default function SimulatorRunnerPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
+
+  // Reset session state when the user starts a new simulator config (different
+  // subject, language, count, or duration). Without this, navigating to
+  // /simulator/run with new params would inherit stale answers from the
+  // previous session because the component instance is reused.
+  useEffect(() => {
+    setIdx(0);
+    setAnswers({});
+    setSubmitted(false);
+    window.scrollTo({ top: 0 });
+  }, [salt]);
 
   const total = questions.length;
   const q = questions[idx];

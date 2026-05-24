@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight, CheckCircle2, RotateCcw } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { EXAMS } from '../../data/exams';
 import { SUBJECT_MAP } from '../../data/subjects';
 import { pickQuestions } from '../../lib/sample';
@@ -12,7 +12,6 @@ import { saveAttempt, toggleBookmark, getBookmarks } from '../../lib/progress';
 
 export default function ExamRunnerPage() {
   const { examId } = useParams();
-  const navigate = useNavigate();
   const { hasSubscription } = useAuth();
   const exam = EXAMS.find((e) => e.id === examId);
 
@@ -25,6 +24,14 @@ export default function ExamRunnerPage() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [bookmarks, setBookmarks] = useState<Record<string, true>>(() => getBookmarks());
+
+  // Reset per-exam state on navigation between different exams.
+  useEffect(() => {
+    setIdx(0);
+    setAnswers({});
+    setSubmitted(false);
+    window.scrollTo({ top: 0 });
+  }, [examId]);
 
   if (!exam) {
     return (
