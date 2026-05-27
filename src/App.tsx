@@ -9,6 +9,7 @@ import PathwayPage from './pages/app/PathwayPage';
 import LessonPage from './pages/app/LessonPage';
 import SimulatorPage from './pages/app/SimulatorPage';
 import SimulatorRunnerPage from './pages/app/SimulatorRunnerPage';
+import SubscriptionPage from './pages/app/SubscriptionPage';
 import SettingsPage from './pages/app/SettingsPage';
 import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="pathway/:lessonId" element={<LessonPage />} />
         <Route path="simulator" element={<SimulatorPage />} />
         <Route path="simulator/run" element={<SimulatorRunnerPage />} />
+        <Route path="subscription" element={<SubscriptionPage />} />
         <Route path="settings" element={<SettingsPage />} />
       </Route>
 

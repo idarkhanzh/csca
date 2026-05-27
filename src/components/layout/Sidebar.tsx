@@ -1,15 +1,16 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Library, GraduationCap, FlaskConical, Settings, Flame } from 'lucide-react';
+import { LayoutDashboard, Library, GraduationCap, FlaskConical, Settings, Flame, Crown } from 'lucide-react';
 import clsx from 'clsx';
 import { useAuth } from '../../lib/auth';
 import { currentStreakDays } from '../../lib/progress';
 
 const NAV = [
-  { to: '/app/dashboard', label: 'Дашборд',           Icon: LayoutDashboard },
-  { to: '/app/exams',     label: 'База заданий',      Icon: Library },
-  { to: '/app/pathway',   label: 'Подготовка с нуля', Icon: GraduationCap },
-  { to: '/app/simulator', label: 'Симулятор',         Icon: FlaskConical },
-  { to: '/app/settings',  label: 'Настройки',         Icon: Settings },
+  { to: '/app/dashboard',    label: 'Дашборд',           Icon: LayoutDashboard },
+  { to: '/app/exams',        label: 'База заданий',      Icon: Library },
+  { to: '/app/pathway',      label: 'Подготовка с нуля', Icon: GraduationCap },
+  { to: '/app/simulator',    label: 'Симулятор',         Icon: FlaskConical },
+  { to: '/app/subscription', label: 'Подписка',          Icon: Crown },
+  { to: '/app/settings',     label: 'Настройки',         Icon: Settings },
 ];
 
 function pluralizeDays(n: number): string {

@@ -10,9 +10,9 @@ export default function Paywall({ compact = false }: { compact?: boolean }) {
         </div>
         <div className="flex-1">
           <div className="text-sm font-semibold text-ink">Раздел доступен по подписке</div>
-          <div className="text-xs text-ink-muted">Для открытия полного доступа свяжитесь с администратором.</div>
+          <div className="text-xs text-ink-muted">Один платёж — пожизненный доступ ко всей платформе.</div>
         </div>
-        <Link to="/app/settings" className="btn-secondary text-xs">Перейти</Link>
+        <Link to="/app/subscription" className="btn-primary text-xs">Открыть подписку</Link>
       </div>
     );
   }
@@ -23,12 +23,12 @@ export default function Paywall({ compact = false }: { compact?: boolean }) {
       </div>
       <h2 className="text-2xl font-extrabold text-ink">Этот раздел доступен по подписке</h2>
       <p className="mt-2 text-ink-muted">
-        Чтобы открыть полный доступ к модулям, симулятору и официальным экзаменам,
-        свяжитесь с администратором — мы активируем подписку вручную.
+        Открой полный доступ к официальным экзаменам CSCA, продвинутым модулям
+        и симулятору — один платёж, пожизненный доступ.
       </p>
       <div className="mt-6 flex items-center justify-center gap-3">
         <Link to="/app/dashboard" className="btn-secondary">Назад к дашборду</Link>
-        <Link to="/app/settings" className="btn-primary">Открыть настройки</Link>
+        <Link to="/app/subscription" className="btn-primary">Оформить подписку</Link>
       </div>
     </div>
   );
