@@ -109,58 +109,65 @@ export default function SubscriptionPage() {
 
 function PurchaseCard({ onBuy }: { onBuy: () => void }) {
   return (
-    <div className="card p-7 md:p-8 border-2 border-navy-800 relative overflow-hidden">
-      <span className="chip absolute -top-3 left-7 bg-navy-800 text-white border-navy-800">
+    <div className="relative pt-4">
+      {/* Floating chip — placed outside the card so it can't be clipped */}
+      <span className="absolute top-0 left-7 z-10 inline-flex items-center gap-1.5 rounded-full bg-navy-800 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white shadow-sm">
         <Crown className="h-3 w-3" /> Лучшее предложение
       </span>
 
-      <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 items-start">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">CSCA Prep · Полный доступ</div>
-          <div className="mt-4 flex items-baseline gap-4 flex-wrap">
-            <div className="text-4xl md:text-5xl font-extrabold text-ink leading-none">3 000 ₽</div>
-            <div className="text-2xl md:text-3xl font-bold text-ink leading-none">/ 15 000 ₸</div>
-          </div>
-          <div className="mt-2 flex items-center gap-3 text-sm">
-            <span className="text-ink-subtle line-through">5 000 ₽ / 25 000 ₸</span>
-            <Badge variant="warning">−40% сейчас</Badge>
-          </div>
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
-            <InfinityIcon className="h-3.5 w-3.5" /> Пожизненный доступ — один платёж
+      <div className="card p-7 md:p-8 border-2 border-navy-800">
+        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 items-start">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">CSCA Prep · Полный доступ</div>
+            <div className="mt-4 flex items-baseline gap-3 flex-wrap">
+              <div className="text-4xl md:text-5xl font-extrabold text-ink leading-none">3 000 ₽</div>
+              <div className="text-2xl md:text-3xl font-bold text-ink-muted leading-none">/ 15 000 ₸</div>
+            </div>
+            <div className="mt-3 flex items-center gap-3 text-sm flex-wrap">
+              <span className="text-ink-subtle line-through">5 000 ₽ / 25 000 ₸</span>
+              <Badge variant="warning">−40% сейчас</Badge>
+            </div>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">
+              <InfinityIcon className="h-3.5 w-3.5" /> Пожизненный доступ — один платёж
+            </div>
+
+            <ul className="mt-6 space-y-2.5 text-sm text-ink">
+              {[
+                'Все 30+ официальных экзаменов CSCA',
+                'Все продвинутые модули по всем предметам',
+                'Полный симулятор экзамена с разбором',
+                'Прогресс, закладки и аналитика',
+                'Все будущие обновления базы — включены',
+              ].map((t) => (
+                <li key={t} className="flex items-start gap-2">
+                  <Check className="h-4 w-4 mt-0.5 text-emerald-600 shrink-0" /> {t}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <button onClick={onBuy} className="btn-primary px-6 py-3 text-sm">
+                Купить <ArrowRight className="h-4 w-4" />
+              </button>
+              <div className="text-xs text-ink-muted">Активация вручную в Telegram, ~5 минут</div>
+            </div>
           </div>
 
-          <ul className="mt-6 space-y-2.5 text-sm text-ink">
-            {[
-              'Все 30+ официальных экзаменов CSCA',
-              'Все продвинутые модули по всем предметам',
-              'Полный симулятор экзамена с разбором',
-              'Прогресс, закладки и аналитика',
-              'Все будущие обновления базы — включены',
-            ].map((t) => (
-              <li key={t} className="flex items-start gap-2">
-                <Check className="h-4 w-4 mt-0.5 text-emerald-600 shrink-0" /> {t}
-              </li>
-            ))}
-          </ul>
+          <div className="rounded-2xl bg-surface-alt border border-navy-100 p-6">
+            <div className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">Сравнение</div>
+            <div className="mt-4 grid grid-cols-[1fr_auto_auto] gap-x-4 gap-y-3 text-sm items-center">
+              <div />
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-ink-subtle text-center w-16">Free</div>
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-navy-800 text-center w-16">Подписка</div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
-            <button onClick={onBuy} className="btn-primary px-6 py-3 text-sm">
-              Купить <ArrowRight className="h-4 w-4" />
-            </button>
-            <div className="text-xs text-ink-muted">Активация вручную в Telegram, ~5 минут</div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl bg-surface-alt border border-navy-100 p-6">
-          <div className="text-xs font-semibold uppercase tracking-wider text-ink-subtle">Сравнение</div>
-          <div className="mt-3 space-y-3 text-sm">
-            <Row label="Базовые модули" free check sub />
-            <Row label="Несколько пробных экзаменов" free check sub />
-            <Row label="Все официальные экзамены CSCA" sub />
-            <Row label="Продвинутые модули" sub />
-            <Row label="Симулятор полного экзамена" sub />
-            <Row label="Разбор и аналитика" sub />
-            <Row label="Пожизненный доступ" sub />
+              <Row label="Базовые модули" free sub />
+              <Row label="Несколько пробных экзаменов" free sub />
+              <Row label="Все официальные экзамены" sub />
+              <Row label="Продвинутые модули" sub />
+              <Row label="Полный симулятор экзамена" sub />
+              <Row label="Разбор и аналитика" sub />
+              <Row label="Пожизненный доступ" sub />
+            </div>
           </div>
         </div>
       </div>
@@ -168,17 +175,17 @@ function PurchaseCard({ onBuy }: { onBuy: () => void }) {
   );
 }
 
-function Row({ label, free, sub }: { label: string; free?: boolean; sub?: boolean; check?: boolean }) {
+function Row({ label, free, sub }: { label: string; free?: boolean; sub?: boolean }) {
   return (
-    <div className="flex items-center gap-3">
-      <div className="flex-1 text-ink">{label}</div>
-      <div className="w-12 text-center">
+    <>
+      <div className="text-ink">{label}</div>
+      <div className="w-16 text-center">
         {free ? <Check className="h-4 w-4 text-emerald-600 mx-auto" /> : <span className="text-ink-subtle">—</span>}
       </div>
-      <div className="w-12 text-center">
+      <div className="w-16 text-center">
         {sub ? <Check className="h-4 w-4 text-emerald-600 mx-auto" /> : <span className="text-ink-subtle">—</span>}
       </div>
-    </div>
+    </>
   );
 }
 
